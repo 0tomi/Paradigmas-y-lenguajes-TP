@@ -142,8 +142,7 @@ defmodule Ej48 do
             lista == [] -> [par]
             tl(par) >= tl(hd(lista)) -> [par | lista]   # la frecuencia esta en el 2do elemento, por eso el tail
             true ->
-                cabeza = hd(lista)
-                [cabeza | insertar_en_orden(par, tl(lista))]
+                [hd(lista) | insertar_en_orden(par, tl(lista))]
         end
     end
 
