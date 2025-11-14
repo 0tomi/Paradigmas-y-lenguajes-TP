@@ -79,12 +79,12 @@ IO.inspect(Ej35.diferenciaSimetrica(a,b))
 #     devuelve la cantidad de elementos de la lista que
 #     cumplen con dicha condición.
 
+# problema de el "contador" innecesario
 defmodule Ej39 do
     def cantidad_de(lista, condicion) do
       contar(lista, condicion, 0)
     end
 
-    # Usando la recursion de elixir
     defp contar(lista, condicion, contador) do
         cond do
         lista == [] -> contador
@@ -109,17 +109,14 @@ IO.puts(Ej39.cantidad_de(a,condicion))
 
 defmodule Ej48 do
     def parFrecuenciaOrdenado(lista) do
-        listaPares = parFrecuencia(lista)
-        ordenar_por_frecuencia(listaPares)
+        ordenar_por_frecuencia(parFrecuencia(lista))
     end
 
     defp ordenar_por_frecuencia(pares) do
         cond do
             pares == [] -> []
             true ->
-                par_actual = hd(pares)
-                resto_ordenado = ordenar_por_frecuencia(tl(pares))
-                insertar_en_orden(par_actual, resto_ordenado)
+                insertar_en_orden(hd(pares), ordenar_por_frecuencia(tl(pares)))
         end
     end
 
@@ -136,10 +133,7 @@ defmodule Ej48 do
         cond do
             lista == [] -> []
             true ->
-                freq = contarFrecuencia(lista, hd(lista),0)
-                elemento = hd(lista)
-                newLista = Ej14.eliminarOcurrencias(lista, elemento)
-                [[elemento, freq]| parFrecuencia(newLista)]
+                [[hd(lista), contarFrecuencia(lista, hd(lista),0)]| parFrecuencia(Ej14.eliminarOcurrencias(lista, hd(lista)))]
         end
     end
     defp contarFrecuencia(lista, item, contador) do

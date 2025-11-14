@@ -108,7 +108,7 @@ defmodule Ej39 do
         end
     end
 
-    # usando la recursion de elixir
+    # usando la recursion "de elixir"
     defp contar(lista, condicion, contador) do
         cond do
         lista == [] -> contador
