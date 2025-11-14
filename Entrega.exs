@@ -23,20 +23,11 @@ IO.inspect(Ej14.eliminarOcurrencias([1,2,3,4,5,3,6], 3))
 #       d. Diferencia simétrica de conjuntos.
 # Asumimos por el enunciado, que los conjuntos vendran bien representados, por lo que no habra numeros duplicados en cada lista.
 defmodule Ej35 do
-    defp pertenece?(x, lista) do    # Poner ? al final de una funcion es una buena practica para identificar funciones booleanas.
+    defp pertenece?(x, lista) do
         cond do
             lista == [] -> false
             hd(lista) == x -> true
             true -> pertenece?(x, tl(lista))
-        end
-    end
-
-    # por si las dudas implemento esta funcion que sanea listas con duplicados
-    def arreglarLista(lista) do
-        cond do
-            lista == [] -> []
-            pertenece?(hd(lista), tl(lista)) -> arreglarLista(tl(lista))
-            true -> [hd(lista)|arreglarLista(tl(lista))]
         end
     end
 
@@ -51,13 +42,12 @@ defmodule Ej35 do
     def interseccion(listaA, listaB) do
         cond do
           listaA == [] -> []
-          not pertenece?(hd(listaA), listaB) -> # not es como la alternativa al ! pero mas lindo
+          not pertenece?(hd(listaA), listaB) ->
             interseccion(tl(listaA), listaB)
           true -> [hd(listaA)| interseccion(tl(listaA), listaB)];
         end
     end
 
-    # A-B, elementos que estan en A que no esten en B.
     def diferencia(listaA, listaB) do
         cond do
             listaA == [] -> []
@@ -67,9 +57,6 @@ defmodule Ej35 do
     end
 
     def diferenciaSimetrica(listaA, listaB) do
-        union(diferencia(listaA, listaB), diferencia(listaB, listaA))
-    end
-    def diferenciaSimetricaB(listaA, listaB) do
         diferencia(union(listaA, listaB), interseccion(listaA,listaB))
     end
 end
@@ -84,10 +71,8 @@ IO.puts("Interseccion: ")
 IO.inspect(Ej35.interseccion(a,b))
 IO.puts("Diferencia: ")
 IO.inspect(Ej35.diferencia(a,b))
-IO.puts("Diferencia Simetrica (Metodo de union de diferencias): ")
-IO.inspect(Ej35.diferenciaSimetrica(a,b))
 IO.puts("Diferencia Simetrica (Metodo de la diferencia entre la union y la intersecion): ")
-IO.inspect(Ej35.diferenciaSimetricaB(a,b))
+IO.inspect(Ej35.diferenciaSimetrica(a,b))
 
 # 39. Escriba una función llamada "Cantidad-de" que toma como
 #     argumentos una lista y una condición (función), y
@@ -99,16 +84,7 @@ defmodule Ej39 do
       contar(lista, condicion, 0)
     end
 
-    # alternativa usando recursion clasica
-    def contarClassic(lista, condicion) do
-        cond do
-            lista == [] -> 0
-            condicion.(hd(lista)) -> contarClassic(tl(lista), condicion) + 1
-            true -> contarClassic(tl(lista), condicion) + 0
-        end
-    end
-
-    # usando la recursion de elixir
+    # Usando la recursion de elixir
     defp contar(lista, condicion, contador) do
         cond do
         lista == [] -> contador
@@ -118,29 +94,12 @@ defmodule Ej39 do
             contar(tl(lista), condicion, contador)
         end
     end
-
-    def cantidad_de2(lista, condicion) do
-        contar2(lista, condicion, 0)
-    end
-
-    defp contar2(lista, condicion, contador) do
-        cond do
-            lista == [] or tl(lista) == [] -> contador
-            condicion.(hd(lista), hd(tl(lista))) ->
-                contar2(tl(lista), condicion, contador + 1)
-            true ->
-                contar2(tl(lista), condicion, contador)
-        end
-    end
 end
 
 IO.puts("Ejercicio 39: ")
 a = ["a", "b", "c", "d", "a", "d", "a", "f"]
-b = [1, 4, 3, 5, 6 , 8, 2, 7]
 condicion = fn(x) -> x == "a" end
 IO.puts(Ej39.cantidad_de(a,condicion))
-condicion2 = fn(x,y) -> x < y end
-IO.puts(Ej39.cantidad_de2(b,condicion2))
 
 # 48. Escriba una función que tome una lista y devuelva una lista
 #     de pares (número frecuencia), ordenados de mayor a
