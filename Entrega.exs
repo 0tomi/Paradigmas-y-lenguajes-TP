@@ -79,19 +79,16 @@ IO.inspect(Ej35.diferenciaSimetrica(a,b))
 #     devuelve la cantidad de elementos de la lista que
 #     cumplen con dicha condición.
 
-# problema de el "contador" innecesario
 defmodule Ej39 do
     def cantidad_de(lista, condicion) do
-      contar(lista, condicion, 0)
+      contarClassic(lista, condicion)
     end
-
-    defp contar(lista, condicion, contador) do
+    
+    def contarClassic(lista, condicion) do
         cond do
-        lista == [] -> contador
-        condicion.(hd(lista)) ->
-            contar(tl(lista), condicion, contador + 1)
-        true ->
-            contar(tl(lista), condicion, contador)
+            lista == [] -> 0
+            condicion.(hd(lista)) -> contarClassic(tl(lista), condicion) + 1
+            true -> contarClassic(tl(lista), condicion)
         end
     end
 end
@@ -123,7 +120,7 @@ defmodule Ej48 do
     defp insertar_en_orden(par, lista) do
         cond do
             lista == [] -> [par]
-            tl(par) >= tl(hd(lista)) -> [par | lista]   # la frecuencia esta en el 2do elemento, por eso el tail
+            hd(tl(par)) >= hd(tl(hd(lista))) -> [par | lista]   # la frecuencia esta en el 2do elemento, por eso el tail
             true ->
                 [hd(lista) | insertar_en_orden(par, tl(lista))]
         end
@@ -136,6 +133,7 @@ defmodule Ej48 do
                 [[hd(lista), contarFrecuencia(lista, hd(lista),0)]| parFrecuencia(Ej14.eliminarOcurrencias(lista, hd(lista)))]
         end
     end
+    
     defp contarFrecuencia(lista, item, contador) do
         cond do
             lista == [] -> contador
