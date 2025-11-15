@@ -130,15 +130,15 @@ defmodule Ej48 do
         cond do
             lista == [] -> []
             true ->
-                [[hd(lista), contarFrecuencia(lista, hd(lista),0)]| parFrecuencia(Ej14.eliminarOcurrencias(lista, hd(lista)))]
+                [[hd(lista), contarFrecuencia(lista, hd(lista))]| parFrecuencia(Ej14.eliminarOcurrencias(lista, hd(lista)))]
         end
     end
     
-    defp contarFrecuencia(lista, item, contador) do
+    defp contarFrecuencia(lista, item) do
         cond do
-            lista == [] -> contador
-            hd(lista) == item -> contarFrecuencia(tl(lista), item, contador+1)
-            true -> contarFrecuencia(tl(lista), item, contador)
+            lista == [] -> 0
+            hd(lista) == item -> contarFrecuencia(tl(lista), item) + 1
+            true -> contarFrecuencia(tl(lista), item)
         end
     end
 end
